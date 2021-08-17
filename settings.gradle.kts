@@ -6,6 +6,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "Kchat"
-include(":android")
+rootProject.name = "KChat"
 include(":shared")
+include(":android")
+include(":backend")
