@@ -26,22 +26,20 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(kotlin("stdlib"))
-                api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
+                implementation(kotlin("stdlib-common"))
+                val ktorVersion = "1.6.2"
+//                api("io.ktor:ktor-server-core:$ktorVersion")
+                api("io.ktor:ktor-locations:$ktorVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.2.2")
+//                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test"))
+                implementation(kotlin("test-common"))
             }
         }
         val androidMain by getting
-//        val androidTest by getting {
-//            dependencies {
-//                implementation(kotlin("test-junit"))
-//                implementation("junit:junit:4.13.2")
-//            }
-//        }
         val jvmMain by getting
     }
 }

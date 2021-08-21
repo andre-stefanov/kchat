@@ -1,9 +1,9 @@
 plugins {
-    kotlin("jvm")
+    kotlin("multiplatform")
     application
 }
 
-version = "1.0"
+version = "1.0-SNAPSHOT"
 
 repositories {
     google()
@@ -11,23 +11,42 @@ repositories {
     maven("https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
 }
 
-dependencies {
-    implementation(project(":shared"))
-    testImplementation(kotlin("test"))
-    implementation("io.ktor:ktor-server-netty:1.6.2")
-    implementation("io.ktor:ktor-html-builder:1.6.2")
-    implementation("ch.qos.logback:logback-classic:1.2.5")
-    implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.3")
-}
+kotlin {
+    jvm {
+        compilations.all {
+            kotlinOptions.jvmTarget = "1.8"
+        }
+        testRuns["test"].executionTask.configure {
+            useJUnit()
+        }
+        withJava()
+    }
 
-tasks.test {
-    useJUnitPlatform()
-}
+    @Suppress("UNUSED_VARIABLE")
+    sourceSets {
+        val jvmMain by getting {
+            dependencies {
+                implementation(project(":shared"))
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>() {
-    kotlinOptions.jvmTarget = "1.8"
+                // use same Ktor version for all ktor dependencies
+                val ktorVersion = "1.6.2"
+
+                // Ktor core components
+                implementation("io.ktor:ktor-server-core:$ktorVersion")
+
+                // use Netty engine
+                implementation("io.ktor:ktor-server-netty:$ktorVersion")
+
+                // use kotlin serialization
+                implementation("io.ktor:ktor-serialization:$ktorVersion")
+
+                // SLF4J implementation for logging
+                implementation("ch.qos.logback:logback-classic:1.2.5")
+            }
+        }
+    }
 }
 
 application {
-    mainClass.set("com.jambit.kchat.backend.ServerKt")
+    mainClass.set("com.jambit.kchat.backend.ApplicationKt")
 }
