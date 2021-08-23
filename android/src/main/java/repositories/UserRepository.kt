@@ -1,6 +1,6 @@
 package repositories
 
-import com.jambit.kchat.android.rest.RestClient
+import com.jambit.kchat.android.api.RestClient
 import com.jambit.kchat.model.User
 
 class UserRepository(

@@ -40,6 +40,9 @@ kotlin {
                 // use kotlin serialization
                 implementation("io.ktor:ktor-serialization:$ktorVersion")
 
+                // use web sockets for async communication
+                implementation("io.ktor:ktor-websockets:$ktorVersion")
+
                 // SLF4J implementation for logging
                 implementation("ch.qos.logback:logback-classic:1.2.5")
             }

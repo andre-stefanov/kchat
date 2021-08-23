@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    id("kotlin-android")
+    kotlin("kapt")
 }
 
 dependencies {
@@ -12,6 +12,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.3.1")
     implementation ("androidx.fragment:fragment-ktx:1.3.6")
     implementation("androidx.constraintlayout:constraintlayout:2.1.0")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
 
     val navigationVersion = "2.3.5"
     implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
@@ -31,6 +32,7 @@ dependencies {
 
     val ktorVersion = "1.6.2"
     implementation("io.ktor:ktor-client-android:$ktorVersion")
+    implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
     implementation("io.ktor:ktor-client-serialization:$ktorVersion")
     implementation("io.ktor:ktor-client-logging-jvm:$ktorVersion")
 }
@@ -51,6 +53,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8

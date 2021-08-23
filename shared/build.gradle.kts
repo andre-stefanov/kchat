@@ -28,10 +28,8 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib-common"))
                 val ktorVersion = "1.6.2"
-//                api("io.ktor:ktor-server-core:$ktorVersion")
                 api("io.ktor:ktor-locations:$ktorVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.2.2")
-//                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
             }
         }
         val commonTest by getting {
