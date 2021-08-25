@@ -23,13 +23,10 @@ import java.util.*
 import kotlin.collections.LinkedHashSet
 
 val users = hashMapOf<String, User>()
-val chats = hashMapOf<String, Chat>().also {
-    val uuid = "0" // general chat
-    it[uuid] = Chat(uuid = uuid, title = "General")
-}
+val chats = hashMapOf(
+    "0" to Chat(uuid = "0", title = "General")
+)
 val messages = mutableListOf<Message>()
-
-
 
 // Start application by using Netty engine
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
@@ -90,9 +87,9 @@ fun Application.module() {
                 call.respond(chats.values.toList())
             }
             post {
-                val (_, title, participants) = call.receive<Chat>()
+                val (_, title) = call.receive<Chat>()
                 val uuid = UUID.randomUUID().toString()
-                val chat = Chat(uuid, title, participants)
+                val chat = Chat(uuid, title)
                 chats[uuid] = chat
                 wsConnections.forEach {
                     it.send(ChatListEvent(uuid, CREATED))

@@ -1,6 +1,6 @@
 package com.jambit.kchat.android.api
 
-import com.jambit.kchat.model.Chat
+import android.util.Log
 import com.jambit.kchat.model.WebSocketEvent
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
@@ -14,6 +14,8 @@ import kotlinx.coroutines.isActive
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
+private const val TAG = "WebSocketClient"
+
 class WebSocketClient {
 
     private val client = HttpClient(OkHttp) {
@@ -23,7 +25,6 @@ class WebSocketClient {
     @ExperimentalCoroutinesApi
     private inline fun <reified T> connect(path: String) = callbackFlow {
         client.webSocket(
-
             method = HttpMethod.Get,
             host = "10.0.21.203",
             port = 8080,
@@ -36,7 +37,12 @@ class WebSocketClient {
             }
         }
 
-        awaitClose { client.close() }
+        Log.d(TAG, "stopped listening to the socket")
+
+        awaitClose {
+            Log.d(TAG, "closing socket")
+            client.close()
+        }
     }
 
 //    @ExperimentalCoroutinesApi

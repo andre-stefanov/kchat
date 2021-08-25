@@ -46,7 +46,7 @@ class RestClient {
 
     suspend fun getChat(uuid: String): Chat = client.get("http://10.0.21.203:8080/chats/$uuid")
 
-    suspend fun test() = client.request<User>(
+    suspend fun test() = client.get<User>(
         url {
             protocol = URLProtocol.HTTP
             host = "10.0.21.203:8080"

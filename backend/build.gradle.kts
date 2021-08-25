@@ -53,3 +53,5 @@ kotlin {
 application {
     mainClass.set("com.jambit.kchat.backend.ApplicationKt")
 }
+
+tasks.withType<org.gradle.jvm.tasks.Jar> { duplicatesStrategy = DuplicatesStrategy.INCLUDE}

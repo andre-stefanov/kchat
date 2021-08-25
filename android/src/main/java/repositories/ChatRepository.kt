@@ -15,7 +15,7 @@ class ChatRepository(
     @ExperimentalCoroutinesApi
     fun getChats() : Flow<List<Chat>> = webSocketClient.events()
         .filterIsInstance<ChatListEvent>()
-        .map { listOf(restClient.getChat(it.chatUuid)) }
+        .map { chatListEvent -> listOf(restClient.getChat(chatListEvent.chatUuid)) }
         .onStart { emit(restClient.getChats()) }
         .runningReduce { list, chat -> list + chat }
 
