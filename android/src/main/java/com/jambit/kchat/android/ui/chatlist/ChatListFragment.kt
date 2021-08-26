@@ -2,15 +2,14 @@ package com.jambit.kchat.android.ui.chatlist
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.jambit.kchat.android.utils.logd
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jambit.kchat.android.R
 import com.jambit.kchat.android.databinding.ChatListFragmentBinding
 import com.jambit.kchat.android.utils.StringPreference
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -38,6 +37,10 @@ class ChatListFragment : Fragment() {
         )
         binding.recyclerView.addItemDecoration(dividerItemDecoration)
 
+        binding.usernameButton.setOnClickListener {
+            username = "John ${System.currentTimeMillis()}"
+        }
+
         binding.vm = vm
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
@@ -54,7 +57,12 @@ class ChatListFragment : Fragment() {
             )
         }
         binding.recyclerView.adapter = adapter
-        vm.chats.observe(viewLifecycleOwner, adapter::submitList)
+        vm.chats.observe(viewLifecycleOwner, {
+            logd(it.isEmpty()) {
+                "Chat list is empty"
+            }
+            adapter.submitList(it)
+        })
     }
 
 }
