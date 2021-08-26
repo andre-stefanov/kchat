@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -51,6 +53,10 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+        }
+        getByName("debug") {
+            val host = gradleLocalProperties(rootDir).getProperty("server.host")
+            buildConfigField("String", "API_HOST", "\"$host\"")
         }
     }
     buildFeatures {

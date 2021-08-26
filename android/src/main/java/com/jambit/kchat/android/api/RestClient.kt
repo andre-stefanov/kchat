@@ -1,6 +1,7 @@
 package com.jambit.kchat.android.api
 
 import android.util.Log
+import com.jambit.kchat.android.BuildConfig
 import com.jambit.kchat.model.Chat
 import com.jambit.kchat.model.User
 import io.ktor.client.*
@@ -11,7 +12,6 @@ import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import io.ktor.util.*
 
 class RestClient {
 
@@ -36,21 +36,15 @@ class RestClient {
 
         // define defaults for all requests
         install(DefaultRequest) {
+            host = BuildConfig.API_HOST
+            port = 8080
             header(HttpHeaders.ContentType, ContentType.Application.Json)
         }
     }
 
-    suspend fun getUsers(): List<User> = client.get("http://10.0.21.203:8080/users")
+    suspend fun getUsers(): List<User> = client.get("/users")
 
-    suspend fun getChats(): List<Chat> = client.get("http://10.0.21.203:8080/chats")
+    suspend fun getChats(): List<Chat> = client.get("/chats")
 
-    suspend fun getChat(uuid: String): Chat = client.get("http://10.0.21.203:8080/chats/$uuid")
-
-    suspend fun test() = client.get<User>(
-        url {
-            protocol = URLProtocol.HTTP
-            host = "10.0.21.203:8080"
-            path("users")
-        }
-    )
+    suspend fun getChat(uuid: String): Chat = client.get("/chats/$uuid")
 }

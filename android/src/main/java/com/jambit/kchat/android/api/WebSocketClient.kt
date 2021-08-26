@@ -45,9 +45,6 @@ class WebSocketClient {
         }
     }
 
-//    @ExperimentalCoroutinesApi
-//    fun messages() = connect<Message>("/messages")
-
     @ExperimentalCoroutinesApi
     fun events() = connect<WebSocketEvent>("/")
 }
