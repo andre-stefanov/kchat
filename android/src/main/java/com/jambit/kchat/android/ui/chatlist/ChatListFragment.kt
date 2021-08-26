@@ -1,5 +1,6 @@
 package com.jambit.kchat.android.ui.chatlist
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,17 +8,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jambit.kchat.android.R
 import com.jambit.kchat.android.databinding.ChatListFragmentBinding
+import com.jambit.kchat.android.utils.StringPreference
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import androidx.recyclerview.widget.DividerItemDecoration
-
+import org.koin.android.ext.android.inject
 
 class ChatListFragment : Fragment() {
 
     private lateinit var binding: ChatListFragmentBinding
     private val vm: ChatListViewModel by viewModel()
+
+    private val appContext: Context by inject()
+    private var username: String by StringPreference(appContext, "username", "NONE")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
