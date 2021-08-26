@@ -1,6 +1,7 @@
 package com.jambit.kchat.android.api
 
 import android.util.Log
+import com.jambit.kchat.android.BuildConfig
 import com.jambit.kchat.model.WebSocketEvent
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
@@ -26,7 +27,7 @@ class WebSocketClient {
     private inline fun <reified T> connect(path: String) = callbackFlow {
         client.webSocket(
             method = HttpMethod.Get,
-            host = "10.0.21.203",
+            host = BuildConfig.API_HOST,
             port = 8080,
             path = path
         ) {
